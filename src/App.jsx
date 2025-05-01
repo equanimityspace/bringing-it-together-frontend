@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route } from "react-router-dom";
 
 // import Home from "./components/Home";
-import Login from "./components/Login";
+// import Login from "./components/Login";
 // import Registration from "./components/Registration";
 // import SingleUser from "./components/SingleUser";
 
