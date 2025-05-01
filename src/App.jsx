@@ -9,11 +9,11 @@ function App() {
   <>
     <Routes>
       {/* No login needed */}
-      <Route path="/" element={<Home />} />
       <Route path="/register" element={<Registration />} />
       <Route path="/login" element={<Login />} />
 
       {/* must be logged in */}
+      <Route path="/" element={<Home />} />
       <Route path="/user/:id" element={<SingleUser />} />
     </Routes>
   </>;
