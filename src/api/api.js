@@ -7,7 +7,7 @@ const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
-      const LOCAL_TOKEN = getToken(); // fix this;
+      const LOCAL_TOKEN = getToken();
       if (LOCAL_TOKEN) {
         headers.set("authorization", `Bearer ${LOCAL_TOKEN}`);
       }
