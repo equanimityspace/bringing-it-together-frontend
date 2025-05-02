@@ -12,7 +12,14 @@ import InfoModal from "./Modal";
 export default function Login() {
   const navigate = useNavigate();
 
-  const [register] = useRegisterMutation();
+  const [register, status] = useRegisterMutation();
+
+  // Modal logic
+  const [response, setResponse] = useState();
+  const [show, setShow] = useState(false);
+
+  const openModal = () => setShow(true);
+  const closeModal = () => setShow(false);
 
   // Modal logic
   const [response, setResponse] = useState();
@@ -116,9 +123,15 @@ export default function Login() {
                 onChange={update}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            {!status?.isLoading ? (
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            ) : (
+              <Button variant="primary" type="submit" disabled>
+                Loading...
+              </Button>
+            )}
           </Form>
         </Card.Body>
       </Card>
