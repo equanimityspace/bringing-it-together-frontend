@@ -1,6 +1,6 @@
 import api from "../api/api";
 
-// login, register, get all users, get user by id
+login, register, get all users, get user by id
 const usersApi = api.injectEndpoints({
   endpoints: (build) => ({
     register: build.mutation({
