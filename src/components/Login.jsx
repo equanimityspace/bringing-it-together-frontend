@@ -24,20 +24,17 @@ export default function Login() {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(e.target.name);
   };
 
   // submit login request
   const submit = async (e) => {
     try {
       e.preventDefault();
-      console.log(formData);
       const response = await login(formData);
       // setResponse(response) for possible modal usage
 
       // on successful login, return home
       if (response?.data) {
-        console.log("successful login!");
         navigate("/");
       }
     } catch (error) {

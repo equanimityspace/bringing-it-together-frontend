@@ -26,7 +26,6 @@ export default function Login() {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(e.target.name);
   };
 
   // submit login request
@@ -38,7 +37,6 @@ export default function Login() {
 
       // on successful login, return home
       if (response?.data) {
-        console.log("registered successfully!");
         navigate("/");
       }
     } catch (error) {
