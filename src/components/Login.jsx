@@ -11,7 +11,7 @@ import Card from "react-bootstrap/Card";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [login] = useLoginMutation();
+  const [login, status] = useLoginMutation();
 
   // Modal logic
   const [response, setResponse] = useState();
@@ -95,9 +95,15 @@ export default function Login() {
                 onChange={update}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            {!status?.isLoading ? (
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            ) : (
+              <Button variant="primary" type="submit" disabled>
+                Loading...
+              </Button>
+            )}
           </Form>
         </Card.Body>
       </Card>
