@@ -21,13 +21,6 @@ export default function Login() {
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
 
-  // Modal logic
-  const [response, setResponse] = useState();
-  const [show, setShow] = useState(false);
-
-  const openModal = () => setShow(true);
-  const closeModal = () => setShow(false);
-
   // stores data from login form
   const [formData, setFormData] = useState({
     firstName: "",

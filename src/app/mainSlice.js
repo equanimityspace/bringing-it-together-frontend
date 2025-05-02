@@ -31,7 +31,7 @@ const usersApi = api.injectEndpoints({
 
     getAllUsers: build.query({
       query: () => ({
-        url: "/",
+        url: "/auth/getAllUsers/",
         method: "GET",
       }),
       providesTags: ["User"],
@@ -39,7 +39,7 @@ const usersApi = api.injectEndpoints({
 
     getUser: build.query({
       query: (id) => ({
-        url: `users/${id}`,
+        url: `getUser/${id}`,
         method: "GET",
       }),
       invalidatesTags: ["User"],
