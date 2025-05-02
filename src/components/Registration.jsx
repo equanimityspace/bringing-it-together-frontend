@@ -7,10 +7,19 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 
+import InfoModal from "./Modal";
+
 export default function Login() {
   const navigate = useNavigate();
 
   const [register] = useRegisterMutation();
+
+  // Modal logic
+  const [response, setResponse] = useState();
+  const [show, setShow] = useState(false);
+
+  const openModal = () => setShow(true);
+  const closeModal = () => setShow(false);
 
   // stores data from login form
   const [formData, setFormData] = useState({
@@ -33,11 +42,13 @@ export default function Login() {
     try {
       e.preventDefault();
       const response = await register(formData);
-      // setResponse(response) for possible modal usage
+      setResponse(response);
 
       // on successful login, return home
       if (response?.data) {
         navigate("/");
+      } else {
+        openModal();
       }
     } catch (error) {
       console.error(error);
@@ -46,6 +57,16 @@ export default function Login() {
 
   return (
     <div className="d-flex justify-content-center vh-80">
+      {show ? (
+        <InfoModal
+          show={show}
+          hide={closeModal}
+          heading="Error"
+          body={response?.error.data.message}
+        />
+      ) : (
+        <></>
+      )}
       <Card className="w-50 mt-5">
         <Card.Header>
           <Nav variant="tabs" defaultActiveKey="/register">
@@ -59,7 +80,7 @@ export default function Login() {
         </Card.Header>
         <Card.Body>
           <Form onSubmit={submit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
@@ -68,7 +89,7 @@ export default function Login() {
                 onChange={update}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" controlId="formBasicLastName">
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="text"
@@ -77,7 +98,7 @@ export default function Login() {
                 onChange={update}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>E-Mail</Form.Label>
               <Form.Control
                 type="email"
