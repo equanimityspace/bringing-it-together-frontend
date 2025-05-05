@@ -25,14 +25,6 @@ export default function Home() {
         openModal();
       }
     };
-
-
-    // const handleDelete = (user) => {
-    //   const { id } = user;
-    //   const updatedUser = data?.filter(user => user.id !== id);
-    //   setResponse({ message: `User ${user.firstName} ${user.lastName} successfully deleted`});
-    //   openModal();
-    // };
   
     const openModal = () => setShow(true);
     const closeModal = () => setShow(false);
