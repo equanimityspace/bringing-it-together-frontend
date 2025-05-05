@@ -43,7 +43,7 @@ export default function Register() {
       e.preventDefault();
       const response = await register(formData);
       setResponse(response);
-      console.log(response);
+
       // on successful login, return home
       if (response.error) {
         openModal();
