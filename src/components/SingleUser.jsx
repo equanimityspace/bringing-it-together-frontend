@@ -39,14 +39,13 @@ export default function SingleUser() {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        // include password only if changing it:
         ...(showPasswordField && formData.password
           ? { password: formData.password }
           : {}),
       }).unwrap();
       setEditMode(false);
       setShowPasswordField(false);
-      refetch(); // optional: refetch user to get updated data immediately
+      refetch();
     } catch {}
   };
 
