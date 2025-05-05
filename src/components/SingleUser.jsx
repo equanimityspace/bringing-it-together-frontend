@@ -13,8 +13,8 @@ export default function SingleUser() {
   const [updateUserProfile, { isLoading: isUpdating, error: updateError }] =
     useUpdateUserProfileMutation();
 
-  const [editMode, setEditMode] = useState(false);
-  const [showPasswordField, setShowPasswordField] = useState(false);
+  const [editMode, setEditMode] = useState(true);
+  const [showPasswordField, setShowPasswordField] = useState(true);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -90,14 +90,15 @@ export default function SingleUser() {
             />
           </div>
           <div>
-            <label>
+            {/* <label>
               <input
                 type="checkbox"
                 checked={showPasswordField}
                 onChange={() => setShowPasswordField((prev) => !prev)}
               />
               Change Password
-            </label>
+            </label> */}
+            <label>Password: </label>
             {showPasswordField && (
               <input
                 type="password"
@@ -120,8 +121,9 @@ export default function SingleUser() {
           <button
             type="button"
             onClick={() => {
-              setEditMode(false);
-              setShowPasswordField(false);
+              // setEditMode(false);
+              // setShowPasswordField(false);
+              navigate("/");
             }}
           >
             Cancel
