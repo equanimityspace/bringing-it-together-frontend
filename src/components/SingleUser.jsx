@@ -5,6 +5,7 @@ import {
   useGetUserQuery,
   useUpdateUserProfileMutation,
 } from "../app/mainSlice";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function SingleUser() {
   const navigate = useNavigate();
@@ -130,11 +131,12 @@ export default function SingleUser() {
           </button>
         </form>
       ) : (
-        <div>
-          <h2>{user.firstName}</h2>
-          <h2>{user.lastName}</h2>
-          <h2>{user.email}</h2>
-          <button onClick={() => setEditMode(true)}>Edit</button>
+        <div className="card" style={{ width: "18rem" }}>
+          <div className="card-body">
+            <h5 className="card-firstName">{user.firstName}</h5>
+            <h5 className="card-lastName">{user.lastName}</h5>
+            <h5 className="card-email">{user.email}</h5>
+          </div>
         </div>
       )}
     </div>
