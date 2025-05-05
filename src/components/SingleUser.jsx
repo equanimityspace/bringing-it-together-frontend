@@ -39,9 +39,7 @@ export default function SingleUser() {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        ...(showPasswordField && formData.password
-          ? { password: formData.password }
-          : {}),
+        password: formData.password,
       }).unwrap();
       setEditMode(false);
       setShowPasswordField(false);
