@@ -1,25 +1,137 @@
-import React from "react";
-import { useGetUserQuery } from "../app/mainSlice";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {
+  useGetUserQuery,
+  useUpdateUserProfileMutation,
+} from "../app/mainSlice";
 
 export default function SingleUser() {
   const { id } = useParams();
-  const { data: user, error, isLoading } = useGetUserQuery(id);
+  const { data: user, error, isLoading, refetch } = useGetUserQuery(id);
+  const [updateUserProfile, { isLoading: isUpdating, error: updateError }] =
+    useUpdateUserProfileMutation();
 
-  if (isLoading) return <p>Were grabing it, hang tight.</p>;
-  if (error)
-    return (
-      <p>
-        It's not working but it's definitly not our fault must be something you
-        did.
-      </p>
-    );
+  const [editMode, setEditMode] = useState(false);
+  const [showPasswordField, setShowPasswordField] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.email || "",
+        password: "",
+      });
+    }
+  }, [user]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await updateUserProfile({
+        id,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        ...(showPasswordField && formData.password
+          ? { password: formData.password }
+          : {}),
+      }).unwrap();
+      setEditMode(false);
+      setShowPasswordField(false);
+      refetch();
+    } catch {}
+  };
+
+  if (isLoading) return <p>Loading user data...</p>;
+  if (error) return <p>Error loading user. Please try again later.</p>;
 
   return (
     <div className="single-user">
-      <h2>{user.firstName}</h2>
-      <h2>{user.lastName}</h2>
-      <h2>{user.email}</h2>
+      {editMode ? (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>First Name:</label>
+            <input
+              type="text"
+              value={formData.firstName}
+              onChange={(e) =>
+                setFormData({ ...formData, firstName: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label>Last Name:</label>
+            <input
+              type="text"
+              value={formData.lastName}
+              onChange={(e) =>
+                setFormData({ ...formData, lastName: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                checked={showPasswordField}
+                onChange={() => setShowPasswordField((prev) => !prev)}
+              />
+              Change Password
+            </label>
+            {showPasswordField && (
+              <input
+                type="password"
+                placeholder="New Password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+              />
+            )}
+          </div>
+          {updateError && (
+            <p className="error">
+              Failed to update: {updateError.data?.message || "Unknown error"}
+            </p>
+          )}
+          <button type="submit" disabled={isUpdating}>
+            {isUpdating ? "Saving..." : "Save Changes"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setEditMode(false);
+              setShowPasswordField(false);
+            }}
+          >
+            Cancel
+          </button>
+        </form>
+      ) : (
+        <div>
+          <h2>{user.firstName}</h2>
+          <h2>{user.lastName}</h2>
+          <h2>{user.email}</h2>
+          <button onClick={() => setEditMode(true)}>Edit</button>
+        </div>
+      )}
     </div>
   );
 }

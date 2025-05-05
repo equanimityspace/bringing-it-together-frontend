@@ -15,7 +15,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         {/* must be logged in */}
         <Route path="/" element={<Home />} />
-        <Route path="/getUser/:id" element={<SingleUser />} />
         <Route path="/user/:id" element={<SingleUser />} />
       </Routes>
     </>
