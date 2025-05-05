@@ -1,9 +1,11 @@
 import React from "react";
 import { useGetUserQuery } from "../app/mainSlice";
 import { useParams } from "react-router-dom";
+
 export default function SingleUser() {
   const { id } = useParams();
   const { data: user, error, isLoading } = useGetUserQuery(id);
+
   if (isLoading) return <p>Were grabing it, hang tight.</p>;
   if (error)
     return (
@@ -12,6 +14,7 @@ export default function SingleUser() {
         did.
       </p>
     );
+
   return (
     <div className="single-user">
       <h2>{user.firstName}</h2>
