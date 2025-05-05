@@ -1,18 +1,12 @@
 import api from "../api/api";
 
-// login, register, get all users, get user by id
 const usersApi = api.injectEndpoints({
   endpoints: (build) => ({
     register: build.mutation({
       query: ({ email, firstName, lastName, password }) => ({
         url: "/auth/register",
         method: "POST",
-        body: {
-          email,
-          firstName,
-          lastName,
-          password,
-        },
+        body: { email, firstName, lastName, password },
       }),
       providesTags: ["User"],
     }),
@@ -21,17 +15,14 @@ const usersApi = api.injectEndpoints({
       query: ({ email, password }) => ({
         url: "/auth/login",
         method: "POST",
-        body: {
-          email,
-          password,
-        },
+        body: { email, password },
       }),
       providesTags: ["User"],
     }),
 
     getAllUsers: build.query({
       query: () => ({
-        url: "/auth/getAllUsers/",
+url: "/auth/getAllUsers/",
         method: "GET",
       }),
       providesTags: ["User"],
@@ -41,6 +32,23 @@ const usersApi = api.injectEndpoints({
       query: (id) => ({
         url: `/auth/getUser/${id}`,
         method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
+
+    deleteUser: build.mutation({
+      query: (id) => ({
+        url: `auth/deleteUser/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    updateUserProfile: build.mutation({
+      query: ({ id, firstName, lastName, email, password }) => ({
+        url: `/auth/updateUserProfile/${id}`,
+        method: "PUT",
+        body: { firstName, lastName, email, password },
       }),
       invalidatesTags: ["User"],
     }),
@@ -61,4 +69,5 @@ export const {
   useGetAllUsersQuery,
   useGetUserQuery,
   useDeleteUserMutation,
+  useUpdateUserProfileMutation,
 } = usersApi;
