@@ -9,7 +9,7 @@ import Card from "react-bootstrap/Card";
 
 import InfoModal from "./Modal";
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
 
   const [register, status] = useRegisterMutation();
@@ -45,10 +45,10 @@ export default function Login() {
       setResponse(response);
 
       // on successful login, return home
-      if (response?.data) {
-        navigate("/");
-      } else {
+      if (response.error) {
         openModal();
+      } else {
+        navigate("/");
       }
     } catch (error) {
       console.error(error);
@@ -62,7 +62,7 @@ export default function Login() {
           show={show}
           hide={closeModal}
           heading="Error"
-          body={response?.error.data.message}
+          body={response?.error.data}
         />
       ) : (
         <></>
