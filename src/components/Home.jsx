@@ -16,9 +16,9 @@ export default function Home() {
     const [show, setShow] = useState(false);
 
     //handleDelete for delete button
-    const handleDelete = async (user) => {
+    const handleDelete = async (userId) => {
       try {
-        await deleteUser(user).unwrap();
+        await deleteUser(userId).unwrap();
       } catch (error) {
         console.error(error.message);
         openModal();
@@ -69,7 +69,7 @@ export default function Home() {
                         <Accordion.Item eventKey={user.id}>
                           <Accordion.Header className="user-info">{user.email} {user.firstName} {user.lastName}</Accordion.Header>
                             <Accordion.Body>
-                              <Button variant="primary" onClick={() => navigate(`/getUser/${user.id}`)}>Update User</Button>
+                              <Button variant="primary" onClick={() => navigate(`getUser/${user.id}`)}>Update User</Button>
                               <Button variant="primary" onClick={() => handleDelete(user?.id)}>Delete User</Button>
                             </Accordion.Body>
                         </Accordion.Item>
