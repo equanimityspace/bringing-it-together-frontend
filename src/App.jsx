@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import SingleUser from "./components/SingleUser";
+import SingleUser1 from "./components/SingleUser1";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         {/* must be logged in */}
         <Route path="/" element={<Home />} />
-        <Route path="/user/:id" element={<SingleUser />} />
+        <Route path="/user/:id" element={<SingleUser1 />} />
+        {/* <Route path="/user/:id" element={<SingleUser />} /> */}
       </Routes>
     </>
   );
